@@ -1,0 +1,21 @@
+.block1{
+    color: blue;
+    font-size: 4rem;
+}
+
+.tailleInput{
+    width: 100%;
+}
+
+.btnSize{
+    width: 100%;
+    color: white;
+}
+
+.fontStyle{
+    font-style: italic; 
+}
+
+.fontColor{
+    background-color: rgb(93, 93, 181);
+}
