@@ -12,10 +12,19 @@
     color: white;
 }
 
+.btnTaille{
+    width: 20rem;
+}
+
 .fontStyle{
     font-style: italic; 
 }
 
 .fontColor{
     background-color: rgb(93, 93, 181);
+    font-weight: bold;
+}
+
+.roundColor{
+    border: 3px solid  rgb(93, 93, 181);
 }
