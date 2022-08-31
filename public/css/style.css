@@ -13,7 +13,7 @@
 }
 
 .btnTaille{
-    width: 20rem;
+    width: 18rem;
 }
 
 .fontStyle{
@@ -27,4 +27,8 @@
 
 .roundColor{
     border: 3px solid  rgb(93, 93, 181);
+}
+
+.selectPatient{
+width: 100%;
 }

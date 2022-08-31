@@ -23,7 +23,7 @@ include('templates/header.php');
 
                 <div class="row justify-content-center m-0 p-0">
                     <div class="col-lg-11  mt-3 ">
-                        <p class="text-danger text-center fontStyle">erreur de connection</p>
+                        <p class="text-danger text-center fontStyle"><?= isset($error['connection']) ? $error['connection'] : '' ?></p>
                         <input type="submit" class="btn fontColor btnSize" value="Connection">
                     </div>
                 </div>

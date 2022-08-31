@@ -46,8 +46,6 @@ include('templates/header.php');
         </div>
     </div>
 
-
-
     </div>
 </form>
 

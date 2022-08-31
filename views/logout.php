@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once('../controllers/logout-controller.php');
+
+require_once('../controllers/controller-logout.php');
 ?>
 
 <?php

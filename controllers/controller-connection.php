@@ -1,19 +1,22 @@
 <?php
-$showForm =true;
-    $error = [];
-    $regexName = "/^[a-zA-Zéèêë]+$/";
-    $login = "valentin";
-    $passwordHash = '$2y$10$ozIqs0MLIh1fFdKMya1M.eNQfFVh9v51G1VOe9bDHIDE109tF25yi';
+require_once '../config.php';
+require_once '../models/database.php';
+require_once '../models/user.php';
+require_once '../models/doctor.php';
+require_once '../models/medicalspecialities.php';
+
+$showForm = true;
+$error = [];
+$regexName = "/^[a-zA-Zéèêë]+$/";
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    
+
     if (isset($_POST['login'])) {
 
         if ($_POST['login'] == '') {
             $error['login'] = "champ obligatoire";
-        }else if ($_POST['login'] != $login) {
-            $error['login'] = "login erroné";
         }
     }
 
@@ -22,19 +25,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($_POST['password'] == '') {
             $error['password'] = "champ obligatoire";
-        }else if ($_POST['login'] == '' &&  $_POST['password'] != '') {
-            $error['password'] = " veuillez remplir le login";
-        } else if (!password_verify($_POST['password'], $passwordHash)) {
-            $error['password'] = "mot de passe incorect";
         }
     }
 
     if (count($error) == 0) {
-        $_SESSION['user'] = [
-            'lastname' => 'burel',
-            'firstname' => 'valentin',
-            'role' => 1
-        ];
-        header('Location: dashboard.php');
+
+        $userObj = new Users();
+
+        if ($userObj->checkIfMailExists($_POST['login'])) {
+
+            $usersInfo = $userObj->checkPassword($_POST['login']);
+
+            if (password_verify($_POST['password'], $usersInfo['users_password'])) {
+                $_SESSION['user'] = $usersInfo;
+                header("Location: dashboard.php");
+            } else {
+                $error['connection'] = 'Identifiant ou mot de passe  incorecte';
+            }
+        } else {
+            $error['connection'] = 'Identifiant ou mot de passe  incorecte';
+        }
+
+        $doctorObj = new Doctors();
+
+        
     }
 }
