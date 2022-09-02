@@ -4,16 +4,17 @@ if (!isset($_SESSION['user'])) {
   exit;  
 }
 
+var_dump($_GET);
+
 require_once '../config.php';
 require_once '../models/database.php';
 require_once '../models/patient.php';
 
-if(isset($_GET['patients_id'])) {
-  echo 'delete patient';
-  $attributDel = new Patients();
-  $patientsDel = $attributDel->deletePatient($_GET['patients_id']);
-}
-
 $attribut = new Patients();
-$patients = $attribut->returnPatient();
+
+$patient = $attribut->returnOnePatient($_GET['patients']);
+
+
+var_dump($patient);
+
 

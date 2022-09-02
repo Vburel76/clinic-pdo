@@ -204,5 +204,49 @@ class Doctors extends DataBase
         return $result;
     }
 
+    public function returnOneDoctor($doctor_id)
+    {
+        $pdo = parent::connectDb();
+
+        $sql = "SELECT `doctors_id`,`medicalspecialities_id`,`doctors_name`,`doctors_lastname`,`doctors_phonenumber`,`doctors_mail`,`medicalspecialities_name` FROM `doctors` INNER JOIN `medicalspecialities` ON `medicalspecialities_id_medicalspecialities` = `medicalspecialities_id` WHERE `doctors_id` = :doctors_id";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindValue(':doctors_id', $doctor_id, PDO::PARAM_STR);
+
+        $query->execute();
+
+        $result = $query->fetchAll();
+
+        return $result;
+    }
+
+    public function modifDoctor(string $nameDoctor, string $lastnameDoctors, string $phoneNumberDoctors, string $mailDoctors, string $specialitiesDoctors,string $doctorsid): void
+    {
+        // création d'une instance pdo via la fonction du parent
+        $pdo = parent::connectDb();
+
+        // j'écris la requête me permettant d'insérer un patient dans la table patients
+        // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
+        $sql = "UPDATE `doctors` SET `doctors_name`=:doctors_name ,`doctors_lastname`=:doctors_lastname , `doctors_phonenumber`=:doctors_phonenumber, `doctors_mail`=:doctors_mail,`medicalspecialities_id_medicalspecialities` =:medicalspecialities_id_medicalspecialities  WHERE `doctors_id` =:doctors_id";
+        
+
+        // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
+        $query = $pdo->prepare($sql);
+
+        // je lie les valeurs des paramètres aux marqueurs nominatifs respectifs à l'aide de la méthode ->bindValue()
+        $query->bindValue(':doctors_name', $nameDoctor, PDO::PARAM_STR);
+        $query->bindValue(':doctors_lastname', $lastnameDoctors, PDO::PARAM_STR);
+        $query->bindValue(':doctors_phonenumber', $phoneNumberDoctors, PDO::PARAM_STR);
+        $query->bindValue(':doctors_mail', $mailDoctors, PDO::PARAM_STR);
+        $query->bindValue(':medicalspecialities_id_medicalspecialities', $specialitiesDoctors, PDO::PARAM_STR);
+        $query->bindValue(':doctors_id', $doctorsid, PDO::PARAM_STR);
+
+        // une fois le mail récupéré, j'execute la requête à l'aide de la méthode ->execute()
+        $query->execute();
+
+
+    }
+
    
 }

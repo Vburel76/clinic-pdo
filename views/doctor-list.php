@@ -19,20 +19,24 @@ require_once('../models/medicalspecialities.php');
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Mobile</th>
-                    <th scope="col">mail</th>
-                    <th scope="col">spécialitée</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Spécialitée</th>
+                    <th scope="col">Info</th>
+                    <th scope="col">modifier</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 foreach ($doctors as $value) { ?>
                     <tr>
-                        <th><?= $value['doctors_id']?></th>
-                        <td><?= $value['doctors_name']?></td>
-                        <td><?= $value['doctors_lastname']?></td>
-                        <td><?= $value['doctors_phonenumber']?></td>
-                        <td><?= $value['doctors_mail']?></td>
-                        <td><?= $value['medicalspecialities_name']?></td>
+                        <th class="pt-3"><?= $value['doctors_id']?></th>
+                        <td class="pt-3"><?= $value['doctors_name']?></td>
+                        <td class="pt-3"><?= $value['doctors_lastname']?></td>
+                        <td class="pt-3"><?= $value['doctors_phonenumber']?></td>
+                        <td class="pt-3"><?= $value['doctors_mail']?></td>
+                        <td class="pt-3"><?= $value['medicalspecialities_name']?></td>
+                        <td><a href="info-doctor.php?doctors=<?= $value['doctors_id']?>" class="btn btn-primary">+ info</a></td>
+                        <td><a href="modif-doctors-.php?doctors=<?= $value['doctors_id']?>" class="btn btn-secondary">modification</a></td>
                     </tr>
                 <?php } ?>
 

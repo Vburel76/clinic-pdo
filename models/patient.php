@@ -107,6 +107,7 @@ class Patients extends DataBase
         $query->execute();
     }
 
+    // retourne un tableau qui contient tous les patients avec leurs infos
     public function returnPatient()
     {
         // création d'une instance pdo via la fonction du parent
@@ -115,7 +116,7 @@ class Patients extends DataBase
         // j'écris la requête me permettant d'insérer un patient dans la table patients
         // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
         $sql = "SELECT * FROM `patients`";
-    
+
         // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
         $query = $pdo->query($sql);
 
@@ -127,10 +128,10 @@ class Patients extends DataBase
         return $result;
     }
 
-     /**
-     * Permet de récuperer le nom des spécialités et leurs ids respectifs
-     */
-    public function getAllpatient(){
+
+    // retourne un tableau qui contient tous les patients avec leurs infos
+    public function getAllpatient()
+    {
 
         // création d'une instance pdo via la fonction du parent
         $pdo = parent::connectDb();
@@ -138,7 +139,7 @@ class Patients extends DataBase
         // j'écris la requête me permettant d'insérer un patient dans la table patients
         // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
         $sql = "SELECT * FROM `patients`";
-    
+
         // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
         $query = $pdo->query($sql);
 
@@ -148,5 +149,62 @@ class Patients extends DataBase
         $result = $query->fetchAll();
 
         return $result;
+    }
+
+    // retourne les informations d'un seul patient par rapport à l'ID ui est renseigné.
+
+    public function returnOnePatient($patient_id)
+    {
+        $pdo = parent::connectDb();
+
+        $sql = "SELECT * FROM `patients` WHERE `patients_id` = :patients_id";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindValue(':patients_id', $patient_id, PDO::PARAM_STR);
+
+        $query->execute();
+
+        $result = $query->fetchAll();
+
+        return $result;
+    }
+
+    public function modifPatient(string $lastname, string $firstname, string $phoneNumber, string $address, string $mail, string $patientid): void
+    {
+        // création d'une instance pdo via la fonction du parent
+        $pdo = parent::connectDb();
+
+        // j'écris la requête me permettant d'insérer un patient dans la table patients
+        // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
+        $sql = "UPDATE `patients` SET `patients_lastname`=:patients_lastname ,`patients_firstname`=:patients_firstname , `patients_phonenumber`=:patients_phonenumber, `patients_address`=:patients_address, `patients_mail`=:patient_mail WHERE  `patients_id` =:patients_id";
+
+
+        // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
+        $query = $pdo->prepare($sql);
+
+        // je lie les valeurs des paramètres aux marqueurs nominatifs respectifs à l'aide de la méthode ->bindValue()
+        $query->bindValue(':patients_lastname', $lastname, PDO::PARAM_STR);
+        $query->bindValue(':patients_firstname', $firstname, PDO::PARAM_STR);
+        $query->bindValue(':patients_phonenumber', $phoneNumber, PDO::PARAM_STR);
+        $query->bindValue(':patients_address', $address, PDO::PARAM_STR);
+        $query->bindValue(':patient_mail', $mail, PDO::PARAM_STR);
+        $query->bindValue(':patients_id', $patientid, PDO::PARAM_STR);
+
+        // une fois le mail récupéré, j'execute la requête à l'aide de la méthode ->execute()
+        $query->execute();
+    }
+
+    public function deletePatient(string $patientid): void
+    {
+        $pdo = parent::connectDb();
+
+        $sql = "DELETE	FROM `patients` WHERE `patients_id` =:patients_id";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindValue(':patients_id', $patientid, PDO::PARAM_STR);
+
+        $query->execute();
     }
 }
