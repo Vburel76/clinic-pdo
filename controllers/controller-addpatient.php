@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION['user'])) {
     header("Location: connection.php");
-  exit;  
+    exit;
 }
 
 require_once '../config.php';
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // nous allons créer un patient dans la table 'patients'
-    if (count($errors) == 0) {
+    if (count($error) == 0) {
 
         // Je stock les valeurs des inputs dans des variables en effectuant un htmlspecialchars afin de m'assurer que les données soient safe
         $lastname = htmlspecialchars($_POST['lastname']);
@@ -72,15 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $address = htmlspecialchars($_POST['adresse']);
         $mail = htmlspecialchars($_POST['mail']);
 
-        // j'instancie un objet $patientsObj avec la class Patients
         $patientsObj = new Patients();
 
-        // Je fais appelle à la méthode addPatient pour ajouter mon patient : Attention bien respecter l'ordre des paramètres
-        $patientsObj->addPatient($lastname, $firstname, $phoneNumber, $address, $mail);
+        if ($patientsObj->checkIfMailPatientsExists($_POST['mail'])) {
 
-        // Si tout est ok, nous retournons sur une page données
-        header('Location: dashboard.php');
+            $error['mail'] = 'existe deja';
+        } else {
 
+
+            $patientsObj->addPatient($lastname, $firstname, $phoneNumber, $address, $mail);
+
+            header('Location: dashboard.php');
+
+        }
     }
 }
-

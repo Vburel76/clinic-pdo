@@ -107,6 +107,27 @@ class Patients extends DataBase
         $query->execute();
     }
 
+    public function checkIfMailPatientsExists(string $mail): bool
+    {
+        $pdo = parent::connectDb();
+
+        $sql = "SELECT `patients_mail` FROM `patients` WHERE `patients_mail` = :mail";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindValue(':mail', $mail, PDO::PARAM_STR);
+
+        $query->execute();
+
+        $resultPatient = $query->fetchAll();
+
+        if (count( $resultPatient) != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // retourne un tableau qui contient tous les patients avec leurs infos
     public function returnPatient()
     {

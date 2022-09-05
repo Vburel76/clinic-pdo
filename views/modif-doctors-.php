@@ -7,7 +7,7 @@ require_once ('../controllers/controller-modif-doctor.php');
 
 include('templates/header.php');
 ?>
-<a href="table-list.php">Retour</a>
+<a href="doctor-list.php">Retour</a>
 <p class="fs-2 text-center m-5">MODIFICATION DOCTEUR</p>
 
 
@@ -25,8 +25,6 @@ include('templates/header.php');
                     <label for="mobileDoctor">Mobile</label><span class="ms-2 text-danger"><?= isset($error['mobileDoctor']) ? $error['mobileDoctor'] : '' ?></span>
                     <input id="mobileDoctor" name="mobileDoctor" class="tailleInput" type="tel" value="<?= $infodoctors[0]['doctors_phonenumber']?>">
 
-                    <label for="mailDoctor" class="mt-2">Mail</label><span class="ms-2 text-danger"><?= isset($error['mailDoctor']) ? $error['mailDoctor'] : '' ?></span>
-                    <input name="mailDoctor" id="mailDoctor" class="tailleInput" type="email" value="<?= $infodoctors[0]['doctors_mail']?>">
                     
                     <label for="select" class="mt-3" for="select">Domaine</label><span class="ms-2 text-danger"><?= isset($errors['select']) ? $errors['select'] : '' ?></span>
                     <br>

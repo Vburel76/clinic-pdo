@@ -134,4 +134,17 @@ class Users extends DataBase
         return $result;
 
     }
+
+    public function deleteUser(string $usermail): void
+    {
+        $pdo = parent::connectDb();
+
+        $sql = "DELETE	FROM `users` WHERE `users_mail` =:users_mail";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindValue(':users_mail', $usermail, PDO::PARAM_STR);
+
+        $query->execute();
+    }
 }

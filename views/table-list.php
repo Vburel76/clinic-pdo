@@ -34,7 +34,7 @@ require_once('../controllers/controller-table-list.php');
                         <td><a href="info-patient.php?patients=<?= $value['patients_id'] ?>" class="btn btn-primary">+ info</a></td>
                         <td><a href="modif-patient.php?patientId=<?= $value['patients_id'] ?>" class="btn btn-secondary">modification</a></td>
                         <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#patient-<?=$value['patients_id']?>">Supprimer</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#patient-<?= $value['patients_id'] ?>">Supprimer</button>
                         </td>
                     </tr>
 
@@ -46,28 +46,28 @@ require_once('../controllers/controller-table-list.php');
 
             </tbody>
         </table>
-    <?php
+        <?php
         foreach ($patients as $value) { ?>
-                    
-                    <!-- Modal -->
-                    <div class="modal fade" id="patient-<?=$value['patients_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Voulez vous supprimez ? </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">non</button>
-                                    <form action="" method="POST">
-                                        <button type="button" class="btn btn-primary" name ="delete" value="<?= $value['patients_id'] ?>" onclick="document.location='table-list.php?patients_id=<?= $value['patients_id'] ?>'">oui</button>
-                                    </form>
-                                    
-                                </div>
-                            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="patient-<?= $value['patients_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Voulez vous supprimez ? </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">non</button>
+
+                                <button type="button" class="btn btn-primary" name="delete" value="<?= $value['patients_id'] ?>" onclick="document.location='table-list.php?patients_id=<?= $value['patients_id'] ?>'">oui</button>
+                         
+
                         </div>
                     </div>
-                <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
 
     </div>
 </div>

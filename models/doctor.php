@@ -8,9 +8,9 @@ class Doctors extends DataBase
     private string $_doctors_phonenumber;
     private string $_doctors_mail;
     private int $_medicalspecialities_id_medicalspecialies;
-    
-    
- 
+
+
+
     public function get_doctors_id()
     {
         return $this->_doctors_id;
@@ -20,7 +20,7 @@ class Doctors extends DataBase
     {
         $this->_doctors_id = $_doctors_id;
     }
- 
+
     public function get_doctors_name()
     {
         return $this->_doctors_name;
@@ -41,7 +41,7 @@ class Doctors extends DataBase
     {
         $this->_doctors_lastname = $_doctors_lastname;
     }
-    
+
 
     public function get_doctors_phonenumber()
     {
@@ -82,10 +82,10 @@ class Doctors extends DataBase
     /**
      * Rajoute un patient dans la table patients
      * 
-    * 
+     * 
      * @return void
      */
-    public function addDoctor(string $firstname ,string $lastname, string $phonenumber, string $mail, int $specialities): void
+    public function addDoctor(string $firstname, string $lastname, string $phonenumber, string $mail, int $specialities): void
     {
         // création d'une instance pdo via la fonction du parent
         $pdo = parent::connectDb();
@@ -109,28 +109,21 @@ class Doctors extends DataBase
         $query->execute();
     }
 
-    public function checkIfMailExists(string $mail): bool
+    public function checkIfMailDoctorExists(string $mail): bool
     {
         // création d'une instance pdo via la fonction du parent
         $pdo = parent::connectDb();
 
-        // j'écris la requête me permettant d'aller chercher le mail dans la table users
-        // je mets en place un marqueur nominatif :mail
         $sql = "SELECT `doctors_mail` FROM `doctors` WHERE `doctors_mail` = :mail";
-        
-        // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
+
         $query = $pdo->prepare($sql);
 
-        // je lie la valeur du paramètre $mail au marqueur nominatif :mail à l'aide de la méthode ->bindValue()
         $query->bindValue(':mail', $mail, PDO::PARAM_STR);
 
-        // une fois le mail récupéré, j'execute la requête à l'aide de la méthode ->execute()
         $query->execute();
 
-        // je stock dans $result les données récupèrées à l'aide de la méthode ->fetch()
         $resultDoctor = $query->fetchAll();
 
-        // je fais un test pour savoir si $result est vide
         if (count($resultDoctor) != 0) {
             return true;
         } else {
@@ -138,17 +131,17 @@ class Doctors extends DataBase
         }
     }
 
-    public function checkPassword(string $mail) : array
+    public function checkPassword(string $mail): array
     {
 
         // 1) connection a la base de donnée
-        $pdo = parent::connectDb() ;
+        $pdo = parent::connectDb();
 
         // 2) j'ecris la requete pour aller chercher le password
-        $sql = "SELECT * FROM `doctors` WHERE `doctors_mail` = :mail";  
+        $sql = "SELECT * FROM `doctors` WHERE `doctors_mail` = :mail";
 
         // 3) je prepare la requete 
-        $query= $pdo->prepare($sql);
+        $query = $pdo->prepare($sql);
 
         // 4) je lie ':password' à $password
         $query->bindValue(':mail', $mail, PDO::PARAM_STR);
@@ -161,10 +154,9 @@ class Doctors extends DataBase
 
         // 7) j'effectue les vérifications 
         return $resultDoctor;
-
     }
 
-    public function returnPatient()
+    public function returnDoctor()
     {
         // création d'une instance pdo via la fonction du parent
         $pdo = parent::connectDb();
@@ -172,7 +164,7 @@ class Doctors extends DataBase
         // j'écris la requête me permettant d'insérer un patient dans la table patients
         // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
         $sql = "SELECT `doctors_id`,`doctors_name`,`doctors_lastname`,`doctors_phonenumber`,`doctors_mail`,`medicalspecialities_name` FROM `doctors` INNER JOIN `medicalspecialities` ON `medicalspecialities_id_medicalspecialities` = `medicalspecialities_id`";
-    
+
         // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
         $query = $pdo->query($sql);
 
@@ -184,7 +176,8 @@ class Doctors extends DataBase
         return $result;
     }
 
-    public function getAlldoctors(){
+    public function getAlldoctors()
+    {
 
         // création d'une instance pdo via la fonction du parent
         $pdo = parent::connectDb();
@@ -192,7 +185,7 @@ class Doctors extends DataBase
         // j'écris la requête me permettant d'insérer un patient dans la table patients
         // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
         $sql = "SELECT * FROM `doctors`";
-    
+
         // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
         $query = $pdo->query($sql);
 
@@ -221,15 +214,15 @@ class Doctors extends DataBase
         return $result;
     }
 
-    public function modifDoctor(string $nameDoctor, string $lastnameDoctors, string $phoneNumberDoctors, string $mailDoctors, string $specialitiesDoctors,string $doctorsid): void
+    public function modifDoctor(string $nameDoctor, string $lastnameDoctors, string $phoneNumberDoctors, string $specialitiesDoctors, string $doctorsid): void
     {
         // création d'une instance pdo via la fonction du parent
         $pdo = parent::connectDb();
 
         // j'écris la requête me permettant d'insérer un patient dans la table patients
         // je mets en place des marqueurs nominatifs pour faciliter la manipulation des paramètres : :lastname, :firstname, :phonenumber, :address, :mail
-        $sql = "UPDATE `doctors` SET `doctors_name`=:doctors_name ,`doctors_lastname`=:doctors_lastname , `doctors_phonenumber`=:doctors_phonenumber, `doctors_mail`=:doctors_mail,`medicalspecialities_id_medicalspecialities` =:medicalspecialities_id_medicalspecialities  WHERE `doctors_id` =:doctors_id";
-        
+        $sql = "UPDATE `doctors` SET `doctors_name`=:doctors_name ,`doctors_lastname`=:doctors_lastname , `doctors_phonenumber`=:doctors_phonenumber,`medicalspecialities_id_medicalspecialities` =:medicalspecialities_id_medicalspecialities  WHERE `doctors_id` =:doctors_id";
+
 
         // je prépare la requête que je stock dans $query à l'aide de la méthode ->prepare()
         $query = $pdo->prepare($sql);
@@ -238,15 +231,23 @@ class Doctors extends DataBase
         $query->bindValue(':doctors_name', $nameDoctor, PDO::PARAM_STR);
         $query->bindValue(':doctors_lastname', $lastnameDoctors, PDO::PARAM_STR);
         $query->bindValue(':doctors_phonenumber', $phoneNumberDoctors, PDO::PARAM_STR);
-        $query->bindValue(':doctors_mail', $mailDoctors, PDO::PARAM_STR);
         $query->bindValue(':medicalspecialities_id_medicalspecialities', $specialitiesDoctors, PDO::PARAM_STR);
         $query->bindValue(':doctors_id', $doctorsid, PDO::PARAM_STR);
 
         // une fois le mail récupéré, j'execute la requête à l'aide de la méthode ->execute()
         $query->execute();
-
-
     }
 
-   
+    public function deleteDoctor(string $doctortid): void
+    {
+        $pdo = parent::connectDb();
+
+        $sql = "DELETE  FROM `doctors` WHERE `doctors_id` =:doctors_id";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindValue(':doctors_id', $doctortid, PDO::PARAM_STR);
+
+        $query->execute();
+    }
 }

@@ -1,4 +1,8 @@
 <?php 
+if (!isset($_SESSION['user'])) {
+    header("Location: connection.php");
+  exit;  
+}
 
 require_once '../config.php';
 require_once '../models/database.php';
@@ -70,6 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Si tout est ok, nous retournons sur une page données
         header('Location: dashboard.php');
-    
     }
 }

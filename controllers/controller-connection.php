@@ -1,4 +1,12 @@
+
+
+
 <?php
+
+if (!isset($_SESSION['user'])) {
+    header("Location: connection.php");
+  exit;  
+}
 require_once '../config.php';
 require_once '../models/database.php';
 require_once '../models/user.php';

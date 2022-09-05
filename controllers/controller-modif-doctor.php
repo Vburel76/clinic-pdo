@@ -53,16 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-
-    if (isset($_POST['mail'])) {
-
-        if ($_POST['mail'] == '') {
-            $error['mail'] = "champ obligatoire";
-        } else if (!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
-            $error['mail'] = "Mauvais format";
-        }
-    }
-
     if (isset($_POST['adresse'])) {
 
         if ($_POST['adresse'] == '') {
